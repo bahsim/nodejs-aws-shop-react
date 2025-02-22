@@ -11,8 +11,8 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint --ignore-path .gitignore --fix src",
     "prettier": "prettier src --write",
-    "cdk:deploy": "npm run build && cd ./frontend-cdk && cdk deploy --require-approval never",
-    "cdk:destroy": "cd ./frontend-cdk && cdk destroy"
+    "cdk:deploy": "npm run build && cd ./app-cdk && cdk deploy --require-approval never",
+    "cdk:destroy": "cd ./app-cdk && cdk destroy"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
