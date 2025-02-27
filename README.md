@@ -4,6 +4,42 @@ This project is a React-based e-commerce application deployed using AWS services
 
 To get started with this project, follow these steps:
 
+### AWS Configuration
+
+#### Prerequisites
+Before deploying this application, you need to configure your AWS credentials. Make sure you have:
+- AWS CLI installed (`npm install -g aws-cdk`)
+- An AWS account
+- Access Key ID and Secret Access Key with appropriate permissions
+
+### Configure AWS Credentials
+1. Run AWS configure command:
+```bash
+aws configure
+AWS Access Key ID [None]: YOUR_ACCESS_KEY [[1]](https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-net-applications-security/iam-development.html)
+AWS Secret Access Key [None]: YOUR_SECRET_KEY [[2]](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/deployment-beanstalk-specify-credentials.html)
+Default region name [None]: us-east-1
+Default output format [None]: json
+
+# Verify configuration
+aws configure list
+
+# Configure named profiles (optional)
+aws configure --profile dev
+aws configure --profile prod
+
+# Use specific profile
+aws configure list --profile dev
+```
+
+### CDK Bootstrap
+
+Before deploying CDK applications for the first time in an AWS environment (account/region), you need to bootstrap the environment:
+
+```bash
+cdk bootstrap
+```
+
 ### Deploying with AWS CDK
 
 - **Deploy the project using AWS CDK:**

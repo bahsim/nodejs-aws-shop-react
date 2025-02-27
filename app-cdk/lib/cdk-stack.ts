@@ -3,14 +3,15 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
-import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as bucket from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
 
-export class FrontendStack extends cdk.Stack {
+export class CreateCDKStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const websiteBucket = new s3.Bucket(this, 'XXXXXXXXXXXXX', {
+    const websiteBucket = new s3.Bucket(this, 'bahsim-s3-bucket', {
+      bucketName: 'bahsim-s3-bucket',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -25,7 +26,7 @@ export class FrontendStack extends cdk.Stack {
       principals: [originAccessIdentity.grantPrincipal]
     }));
 
-    const distribution = new cloudfront.Distribution(this, 'Distribution', {
+    const distribution = new cloudfront.Distribution(this, 'bahsim-distribution', {
       defaultBehavior: {
         origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -53,8 +54,8 @@ export class FrontendStack extends cdk.Stack {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100
     });
 
-    new s3deploy.BucketDeployment(this, 'XXXXXXXXXXXXXXXXX', {
-      sources: [s3deploy.Source.asset('../dist')],
+    new bucket.BucketDeployment(this, 'ReactBucketDeployment', {
+      sources: [bucket.Source.asset('../dist')],
       destinationBucket: websiteBucket,
       distribution,
       distributionPaths: ['/*']
