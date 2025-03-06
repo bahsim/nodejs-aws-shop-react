@@ -56,10 +56,10 @@ cdk bootstrap
 
 Make sure you have the following installed on your machine:
 
-- [Node.js](https://nodejs.org/) (version 14 or higher)
+- [Node.js](https://nodejs.org/) (version 14.0.0 or higher)
 - [npm](https://www.npmjs.com/) (version 6 or higher)
 - [AWS CLI](https://aws.amazon.com/cli/) (configured with appropriate credentials)
-- [AWS CDK](https://aws.amazon.com/cdk/) (version 1.100.0 or higher)
+- [AWS CDK](https://aws.amazon.com/cdk/) (version 2.178.2 or higher)
 
 ### Environment Setup
 
@@ -100,17 +100,17 @@ Before you begin, ensure your environment is set up correctly:
 
 To run the project, you can use the following scripts:
 
-- **Start the project in development mode with mocked API:**
+- **Start the project in development mode:**
     ```sh
     npm run start
     ```
 
-- **Build the project for production:**
+- **Build the project:**
     ```sh
     npm run build
     ```
 
-- **Preview the project in production mode:**
+- **Preview the production build:**
     ```sh
     npm run preview
     ```
@@ -120,7 +120,7 @@ To run the project, you can use the following scripts:
     npm run test
     ```
 
-- **Run UI tests:**
+- **Run tests with UI:**
     ```sh
     npm run test:ui
     ```
@@ -135,9 +135,19 @@ To run the project, you can use the following scripts:
     npm run lint
     ```
 
-- **Format the code:**
+- **Format code with Prettier:**
     ```sh
     npm run prettier
+    ```
+
+- **Deploy the application using AWS CDK:**
+    ```sh
+    npm run cdk:deploy
+    ```
+
+- **Destroy the deployed AWS resources:**
+    ```sh
+    npm run cdk:destroy
     ```
 
 Now you are ready to start developing with the React-shop-cloudfront project!
