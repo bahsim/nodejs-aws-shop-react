@@ -17,6 +17,9 @@ const queryClient = new QueryClient({
   },
 });
 
+const authorizationToken = import.meta.env.VITE_AUTHORIZATION_TOKEN || "";
+localStorage.setItem("authorization_token", authorizationToken);
+
 // (async () => {
 // if (import.meta.env.DEV) {
 // const { worker } = await import("./mocks/browser");

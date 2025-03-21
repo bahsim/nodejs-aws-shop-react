@@ -1,24 +1,44 @@
-import axios from 'axios';
-import { showAlert } from '~/components/Alert/AlertManager';
+import axios from "axios";
+import { showAlert } from "~/components/Alert/AlertManager";
+
+interface ErrorHandler {
+  message: string;
+  action?: () => void;
+}
+
+const errorMessages: Record<number, ErrorHandler> = {
+  401: {
+    message: "Unauthorized: Please log in to access this resource",
+    action: () => localStorage.removeItem("authorization_token"),
+  },
+  403: {
+    message: "Forbidden: You do not have permission to access this resource",
+  },
+  500: {
+    message: "Internal Server Error",
+  },
+};
 
 export const setupAxiosInterceptors = () => {
   axios.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      return response;
+    },
     (error) => {
       if (error.response) {
-        switch (error.response.status) {
-          case 401:
-            // Handle unauthorized access
-            showAlert('Unauthorized: Please log in to access this resource', 'error');
-            // Optionally, redirect to login page or clear authentication tokens
-            localStorage.removeItem('authorization_token');
-            break;
-          case 403:
-            // Handle forbidden access
-            showAlert('Forbidden: You do not have permission to access this resource', 'error');
-            break;
+        const errorHandler = errorMessages[error.response.status];
+
+        if (errorHandler) {
+          showAlert(errorHandler?.message, "error");
+          errorHandler.action?.(); // Optional chaining to call action if it exists
+        } else {
+          showAlert(
+            `Error: ${error.response.data?.message || "Something went wrong"}`,
+            "error"
+          );
         }
       }
+
       return Promise.reject(error);
     }
   );
