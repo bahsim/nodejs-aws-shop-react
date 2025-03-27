@@ -7,12 +7,18 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { theme } from "~/theme";
+import { setupAxiosInterceptors } from "./utils/axiosInterceptors";
+
+setupAxiosInterceptors();
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { refetchOnWindowFocus: false, retry: false, staleTime: Infinity },
   },
 });
+
+const authorizationToken = import.meta.env.VITE_AUTHORIZATION_TOKEN || "";
+localStorage.setItem("authorization_token", authorizationToken);
 
 // (async () => {
 // if (import.meta.env.DEV) {

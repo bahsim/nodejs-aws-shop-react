@@ -7,6 +7,7 @@ import PageProductImport from "~/components/pages/admin/PageProductImport/PagePr
 import PageCart from "~/components/pages/PageCart/PageCart";
 import PageProducts from "~/components/pages/PageProducts/PageProducts";
 import { Typography } from "@mui/material";
+import { AlertComponent } from "../Alert/AlertManager";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           element={<Typography variant="h1">Not found</Typography>}
         />
       </Routes>
+      <AlertComponent />
     </MainLayout>
   );
 }

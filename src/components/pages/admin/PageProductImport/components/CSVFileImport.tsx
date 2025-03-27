@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { Authorization } from "aws-cdk-lib/aws-events";
 
 type CSVFileImportProps = {
   url: string;
@@ -27,7 +28,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     console.log("uploadFile to", url);
 
     if (!file) {
-      return
+      return;
     }
 
     // Get the presigned URL
@@ -37,6 +38,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       params: {
         name: encodeURIComponent(file.name),
       },
+      headers: {
+        Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
+      },
     });
     console.log("File to upload: ", file.name);
     console.log("Uploading to: ", response.data.signedUrl);
@@ -44,8 +48,8 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       method: "PUT",
       body: file,
       headers: {
-        'Content-Type': 'text/csv',
-      }
+        "Content-Type": "text/csv",
+      },
     });
     console.log("Result: ", result);
     setFile(undefined);
